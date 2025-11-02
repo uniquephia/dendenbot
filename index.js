@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-const DATA_PATH = "./todo.json";
+const DATA_PATH = "./todos.json";
 
 // 🧠 讀取任務資料
 function loadTodos() {
