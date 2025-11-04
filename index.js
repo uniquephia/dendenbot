@@ -141,3 +141,10 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 client.login(process.env.TOKEN);
+
+const http = require("http");
+
+http.createServer((req, res) => {
+  res.write("燈燈機器人在線上中 🎭");
+  res.end();
+}).listen(process.env.PORT || 3000);
