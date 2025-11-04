@@ -33,9 +33,11 @@ client.on("interactionCreate", async (interaction) => {
   if (commandName !== "todo") return;
 
   const subcommand = options.getSubcommand();
-  const todos = loadTodos(); // 每次都先讀最新的
+  const todos = loadTodos();
 
   if (subcommand === "add") {
+    await interaction.deferReply();
+    
     const task = options.getString("task");
     const assignee = options.getUser("assignee");
     const deadline = options.getString("deadline");
@@ -149,7 +151,7 @@ client.on("interactionCreate", async (interaction) => {
       .setFooter({ text: "燈燈小助手 🎧" })
       .setTimestamp();
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
   }
 });
 
