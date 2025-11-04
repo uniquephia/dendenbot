@@ -65,17 +65,17 @@ client.on("interactionCreate", async (interaction) => {
 
     saveTodos(todos);
 
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwc-VKIebZqDKO7hYSc2FYYrv-qm51Q-kr1dXiqjgpmlAHOuD4bmO7d9421MgahHNSH/exec";
-    await fetch(GOOGLE_SCRIPT_URL, {
+    await fetch("https://script.google.com/macros/s/AKfycbwc-VKIebZqDKO7hYSc2FYYrv-qm51Q-kr1dXiqjgpmlAHOuD4bmO7d9421MgahHNSH/exec", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
     task,
-    assigner: interaction.user.username,
-    assignee: assignee.username,
+    assignerName: interaction.member.nickname || interaction.user.username,
+    assigneeId: assignee.id,
     deadline
   })
 });
+
 
     const embed = new EmbedBuilder()
       .setColor("#57f287")
