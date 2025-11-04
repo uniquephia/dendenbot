@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits, EmbedBuilder } = require("discord.js");
 const fs = require("fs");
 require("dotenv").config();
+const fetch = require("node-fetch");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -60,7 +61,19 @@ client.on("interactionCreate", async (interaction) => {
     if (!todos[id]) todos[id] = [];
     todos[id].push(taskData);
 
-    saveTodos(todos); // 寫回 JSON
+    saveTodos(todos);
+
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwc-VKIebZqDKO7hYSc2FYYrv-qm51Q-kr1dXiqjgpmlAHOuD4bmO7d9421MgahHNSH/exec";
+    await fetch(GOOGLE_SCRIPT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+    task,
+    assigner: interaction.user.username,
+    assignee: assignee.username,
+    deadline
+  })
+});
 
     const embed = new EmbedBuilder()
       .setColor("#57f287")
